@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
 @ActiveProfiles("test")
-class PermissionRepositoryTest {
+class PermissionRepositoryTest extends BaseTestConfig {
 
     @Autowired
     private PermissionRepository permissionRepository;
@@ -22,10 +24,21 @@ class PermissionRepositoryTest {
         permission.setDescription("Permite leer usuarios");
 
         Permission savedPermission = permissionRepository.save(permission);
-        assertNotNull(savedPermission.getId());
+        assertThat(savedPermission.getId()).isNotNull();
 
         Optional<Permission> found = permissionRepository.findByName("READ_USERS");
-        assertTrue(found.isPresent());
-        assertEquals("READ_USERS", found.get().getName());
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("READ_USERS");
+    }
+
+    @Test
+    void findByName() {
+        Permission permission = new Permission();
+        permission.setName("READ");
+        permissionRepository.save(permission);
+
+        Optional<Permission> found = permissionRepository.findByName("READ");
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("READ");
     }
 } 

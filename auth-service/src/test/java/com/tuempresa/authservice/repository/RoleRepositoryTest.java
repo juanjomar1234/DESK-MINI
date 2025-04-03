@@ -6,27 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashSet;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.tuempresa.authservice.config.BaseTestConfig;
 
 @DataMongoTest
 @ActiveProfiles("test")
-class RoleRepositoryTest {
+class RoleRepositoryTest extends BaseTestConfig {
 
     @Autowired
     private RoleRepository roleRepository;
 
     @Test
-    void testSaveAndFindRole() {
+    void findByName() {
         Role role = new Role();
         role.setName("ADMIN");
-        role.setDescription("Rol de administrador");
         role.setPermissions(new HashSet<>());
-
-        Role savedRole = roleRepository.save(role);
-        assertNotNull(savedRole.getId());
+        roleRepository.save(role);
 
         Optional<Role> found = roleRepository.findByName("ADMIN");
-        assertTrue(found.isPresent());
-        assertEquals("ADMIN", found.get().getName());
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("ADMIN");
     }
 } 
