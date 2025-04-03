@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent: #3182ce;
+            --card-hover: #363636;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .app-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid #404040;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            background-color: var(--card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-icon {
+            background-color: var(--accent);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .app-title {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .app-description {
+            color: var(--text-secondary);
+        }
+
+        .dashboard-header {
+            border-bottom: 1px solid #404040;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <div class="dashboard-header">
+            <h1 class="text-3xl font-bold">Applications Dashboard</h1>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div th:each="card : ${cards}" 
+                 class="app-card rounded-lg">
+                <a th:href="${card.appUrl}" class="block p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="app-icon">
+                            <img th:src="${card.iconUrl}" 
+                                 th:alt="${card.name}" 
+                                 class="w-10 h-10 object-contain">
+                        </div>
+                        <h2 class="app-title text-xl ml-4" th:text="${card.name}">App Name</h2>
+                    </div>
+                    <p class="app-description" th:text="${card.description}">Description</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

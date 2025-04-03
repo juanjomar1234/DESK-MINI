@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: frontend-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/frontend_db
+  thymeleaf:
+    cache: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics 

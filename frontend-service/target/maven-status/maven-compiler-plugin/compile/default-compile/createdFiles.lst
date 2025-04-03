@@ -1,0 +1,6 @@
+com\tuempresa\frontendservice\controller\HomeController.class
+com\tuempresa\frontendservice\FrontendServiceApplication.class
+com\tuempresa\frontendservice\service\AppCardService.class
+com\tuempresa\frontendservice\model\AppCard.class
+com\tuempresa\frontendservice\repository\AppCardRepository.class
+com\tuempresa\frontendservice\controller\AuthViewController.class

@@ -1,0 +1,5 @@
+com\tuempresa\frontendservice\controller\AuthViewControllerTest.class
+com\tuempresa\frontendservice\integration\NavigationIntegrationTest.class
+com\tuempresa\frontendservice\integration\AuthViewIntegrationTest.class
+com\tuempresa\frontendservice\controller\HomeControllerTest.class
+com\tuempresa\frontendservice\service\AppCardServiceTest.class

@@ -1,0 +1,89 @@
+**Prompt de Proyecto Completo**
+
+**Objetivo Principal:** Diseñar y desarrollar una aplicación web modular basada en microservicios, con una arquitectura escalable, clara y organizada. Cada microservicio debe cumplir exclusivamente con las funcionalidades requeridas, evitando desviaciones o expansiones innecesarias.
+
+**Microservicios Definidos**  
+1. **Auth-Service**:
+   - Gestión de autenticación de usuarios.
+   - Manejo de roles y permisos específicos mediante tokens JWT.
+   - Exclusión de OAuth o integraciones externas a menos que se especifique.
+
+2. **Panel-Service**:
+   - Página principal con tarjetas que incluyan icono, nombre y descripción.
+   - Enlaces directos a aplicaciones o servicios relacionados.
+
+3. **Email-Service**:
+   - Envío básico de correos electrónicos.
+   - Uso de plantillas y adjuntos simples, excluyendo capacidades de análisis avanzadas.
+
+4. **CRM-Service**:
+   - Gestión de clientes, interacciones y oportunidades.
+   - Soporte básico para el ciclo de ventas y seguimiento.
+
+5. **Log-Service**:
+   - Registro centralizado de eventos del sistema y usuarios.
+   - Logs para auditoría y monitoreo.
+
+6. **Contact-Service**:
+   - Organización de contactos mediante etiquetas y categorías.
+   - Funciones de importación/exportación.
+
+7. **Task-Service**:
+   - Gestión de tareas asignables con fechas límite.
+   - Priorización y seguimiento básico.
+
+8. **Board-Service, Card-Service y List-Service**:
+   - Tableros organizados al estilo Kanban.
+   - Creación y edición de tarjetas y listas dentro de tableros.
+
+9. **Doc-Service y File-Service**:
+   - Gestión de documentos y archivos.
+   - Funcionalidades de almacenamiento, descarga y manejo de versiones.
+
+10. **Message-Service**:
+    - Integración para recibir y enviar mensajes desde plataformas como WhatsApp, Telegram, Facebook, YouTube, etc.
+
+11. **ChatBot-Service**:
+    - Creación de chatbots con flujos predefinidos.
+    - IA básica para responder consultas abiertas.
+
+12. **Analytics-Service**:
+    - Recolección y análisis de métricas de uso.
+    - Visualización básica de reportes y estadísticas.
+
+13. **Theme-Service**:
+    - Gestión de temas visuales (colores, tipografía).
+    - Distribución dinámica de temas preconfigurados.
+
+14. **Branding-Service**:
+    - Organización de elementos de marca como logotipos y colores.
+    - Centralización de recursos de branding y guías de estilo.
+
+15. **Calendar-Service**:
+    - Creación de eventos y recordatorios con soporte para calendarios compartidos.
+    - Sincronización de zonas horarias.
+
+16. **Automatization-Service**:
+    - Implementación de flujos de trabajo automatizados.
+    - Disparadores basados en tiempo o eventos específicos.
+
+---
+
+**Restricciones y Control**  
+1. **Sin Funcionalidades Innecesarias**:
+   - Cada servicio debe limitarse exclusivamente a las funcionalidades descritas, sin desviaciones ni expansiones no requeridas.
+
+2. **Auditorías Periódicas**:
+   - Revisiones regulares para garantizar que los servicios se mantengan dentro de los límites establecidos.
+
+3. **Pruebas y Validaciones**:
+   - Implementación de pruebas continuas para asegurar el correcto funcionamiento y cumplimiento de los requisitos.
+
+4. **Integración Coordinada**:
+   - Asegurar que cada microservicio colabore eficientemente sin crear dependencias innecesarias.
+
+**Indicaciones Adicionales**:
+- Arquitectura basada en contenedores con Docker y orquestación mediante Kubernetes.
+- Bases de datos específicas según las necesidades del servicio.
+- Comunicación entre microservicios a través de APIs REST bien documentadas.
+- Priorización de simplicidad y funcionalidad sobre optimización prematura.

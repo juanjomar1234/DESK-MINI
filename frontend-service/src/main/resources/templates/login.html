@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent: #3182ce;
+            --card-hover: #363636;
+            --input-bg: #232323;
+            --error: #e53e3e;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .auth-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .form-input {
+            background-color: var(--input-bg);
+            border: 1px solid #404040;
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .link {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .link:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="auth-card w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-8 text-center">Login</h2>
+            
+            <form th:action="@{/auth/login}" method="post" class="space-y-6">
+                <div th:if="${error}" class="error-message text-center" th:text="${error}">
+                    Invalid credentials
+                </div>
+                
+                <div>
+                    <label for="username" class="block text-sm font-medium">Username</label>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           class="form-input" 
+                           required>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium">Password</label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           class="form-input" 
+                           required>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn-primary w-full">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 text-center">
+                <span class="text-sm text-secondary">Don't have an account? </span>
+                <a href="/register" class="text-sm link">Register here</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

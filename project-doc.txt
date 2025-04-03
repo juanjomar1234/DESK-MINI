@@ -1,0 +1,171 @@
+AUTH SERVICE - DOCUMENTACIÓN
+
+1. DESCRIPCIÓN GENERAL
+El Auth Service es un microservicio de autenticación y autorización que gestiona usuarios, roles y permisos mediante tokens JWT. Es parte de una arquitectura de microservicios más amplia.
+
+2. TECNOLOGÍAS
+- Spring Boot 3.2.3
+- Spring Security
+- MongoDB
+- JWT (JSON Web Tokens)
+- Docker
+- JUnit 5
+
+3. ESTRUCTURA DEL PROYECTO
+/auth-service
+    /src
+        /main
+            /java/com/tuempresa/authservice
+                /config         - Configuraciones de Spring y Seguridad
+                /controller    - Controladores REST
+                /dto          - Objetos de transferencia de datos
+                /model        - Entidades de dominio
+                /repository   - Interfaces de MongoDB
+                /security     - Componentes de seguridad
+                /service      - Lógica de negocio
+            /resources       - Archivos de configuración
+        /test               - Pruebas unitarias y de integración
+    pom.xml                - Configuración Maven
+    Dockerfile            - Configuración Docker
+
+4. ENDPOINTS API
+
+4.1 Autenticación (/api/auth)
+- POST /login
+  Entrada: { "username": "string", "password": "string" }
+  Salida: { "token": "string", "username": "string", "roles": ["string"] }
+
+- POST /register
+  Entrada: { "username": "string", "email": "string", "password": "string" }
+  Salida: { "username": "string", "email": "string" }
+
+4.2 Usuarios (/api/users)
+- GET /
+  Requiere: Permiso READ_USERS
+  Salida: Lista de usuarios
+
+- GET /{username}
+  Requiere: Permiso READ_USERS
+  Salida: Detalles del usuario
+
+- PUT /{id}
+  Requiere: Permiso UPDATE_USERS
+  Entrada: Datos del usuario
+  Salida: Usuario actualizado
+
+- DELETE /{id}
+  Requiere: Permiso DELETE_USERS
+
+5. SEGURIDAD
+- Autenticación mediante JWT
+- Tokens con expiración de 24 horas
+- Permisos granulares:
+  * READ_USERS
+  * UPDATE_USERS
+  * DELETE_USERS
+
+6. BASE DE DATOS
+- MongoDB
+- Colecciones:
+  * users
+  * roles
+  * permissions
+
+7. CONFIGURACIÓN
+- Puerto: 8081
+- MongoDB URI: mongodb://localhost:27017/auth_db
+- JWT Secret: Configurable en application.yml
+- JWT Expiración: 86400000 ms (24 horas)
+- Credenciales iniciales:
+  * Usuario: owner
+  * Contraseña: ownerPassword123!
+  * Rol: OWNER
+  * Permisos: READ_USERS, CREATE_USERS, UPDATE_USERS, DELETE_USERS, MANAGE_ROLES
+
+8. DOCKER
+- Imagen: openjdk:17-jdk-slim
+- Puerto: 8081
+- Comandos:
+  * Construir: mvn clean package dockerfile:build
+  * Ejecutar: docker run -p 8081:8081 tuempresa/auth-service
+
+9. PRUEBAS
+- Unitarias: Modelos, Servicios, Utilidades
+- Integración: Endpoints API
+- Cobertura: Controllers, Services, Security
+
+10. DESPLIEGUE
+1) Construir JAR:
+   mvn clean package
+
+2) Construir imagen Docker:
+   mvn dockerfile:build
+
+3) Ejecutar contenedor:
+   docker run -p 8081:8081 tuempresa/auth-service
+
+11. MONITOREO
+- Logs de aplicación
+- Métricas de Spring Boot Actuator
+- Trazabilidad de solicitudes
+
+12. MANTENIMIENTO
+- Backups diarios de MongoDB
+- Rotación de logs
+- Actualización periódica de dependencias
+
+## Componentes Principales
+
+### Modelos (model/)
+1. User
+   - Gestión de información de usuarios
+   - Campos: username, email, password, roles, estados de cuenta
+
+2. Role
+   - Definición de roles del sistema
+   - Relación muchos a muchos con permisos
+
+3. Permission
+   - Permisos granulares del sistema
+   - Utilizados para control de acceso específico
+
+### Seguridad (security/)
+1. JwtTokenProvider
+   - Generación y validación de tokens JWT
+   - Gestión de claims y expiración
+
+2. JwtAuthenticationFilter
+   - Filtro de autenticación para peticiones HTTP
+   - Validación de tokens en cada petición
+
+3. CustomUserDetailsService
+   - Carga de usuarios para Spring Security
+   - Mapeo de roles y permisos
+
+### Controladores (controller/)
+1. AuthController (/api/auth)
+   - POST /login: Autenticación de usuarios
+   - POST /register: Registro de nuevos usuarios
+
+2. UserController (/api/users)
+   - GET /: Lista todos los usuarios
+   - GET /{username}: Obtiene usuario por username
+   - PUT /{id}: Actualiza usuario
+   - DELETE /{id}: Elimina usuario
+
+### DTOs (dto/)
+1. AuthRequest
+   - Datos para autenticación
+   - Username y password
+
+2. AuthResponse
+   - Respuesta de autenticación
+   - Token JWT, username y roles
+
+3. UserDto
+   - Transferencia de datos de usuario
+   - Excluye información sensible
+
+## Uso del Servicio
+
+### Autenticación
