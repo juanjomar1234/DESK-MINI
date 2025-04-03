@@ -20,6 +20,7 @@
         <java.version>17</java.version>
         <jwt.version>0.11.5</jwt.version>
         <testcontainers.version>1.19.6</testcontainers.version>
+        <flapdoodle.version>4.12.2</flapdoodle.version>
     </properties>
     
     <dependencies>
@@ -81,6 +82,7 @@
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${flapdoodle.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
