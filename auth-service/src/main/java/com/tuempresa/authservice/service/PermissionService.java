@@ -15,7 +15,7 @@ public class PermissionService {
 
     public Permission createPermission(Permission permission) {
         if (permissionRepository.existsByName(permission.getName())) {
-            throw new IllegalArgumentException("Permission name already exists");
+            throw new IllegalArgumentException("Permission already exists");
         }
         return permissionRepository.save(permission);
     }

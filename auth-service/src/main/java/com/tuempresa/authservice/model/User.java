@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.util.Set;
 import java.util.Date;
+import java.util.HashSet;
 
 @Data
 @Document(collection = "users")
@@ -31,7 +32,7 @@ public class User {
     private boolean accountNonLocked = true;
     
     @DBRef
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     private boolean passwordChangeRequired = false;
     private Date lastPasswordChangeDate;

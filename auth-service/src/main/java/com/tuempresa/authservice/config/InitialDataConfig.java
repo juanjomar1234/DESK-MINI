@@ -8,63 +8,56 @@ import com.tuempresa.authservice.repository.RoleRepository;
 import com.tuempresa.authservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+@Configuration
 @RequiredArgsConstructor
-@ConfigurationProperties(prefix = "initial.owner")
-public class InitialDataConfig implements CommandLineRunner {
-
-    private String username;
-    private String email;
-    private String password;
+public class InitialDataConfig {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public void run(String... args) {
-        if (userRepository.count() == 0) {
-            // Crear permisos básicos
-            Permission readUsers = createPermission("READ_USERS", "Permite leer usuarios");
-            Permission createUsers = createPermission("CREATE_USERS", "Permite crear usuarios");
-            Permission updateUsers = createPermission("UPDATE_USERS", "Permite actualizar usuarios");
-            Permission deleteUsers = createPermission("DELETE_USERS", "Permite eliminar usuarios");
-            Permission manageRoles = createPermission("MANAGE_ROLES", "Permite gestionar roles");
+    @Bean
+    public CommandLineRunner initData() {
+        return args -> {
+            if (userRepository.count() > 0) {
+                return;
+            }
 
-            // Crear rol OWNER con todos los permisos
+            // Crear permisos básicos
+            Permission readPermission = new Permission();
+            readPermission.setName("READ");
+            readPermission.setDescription("Permiso de lectura");
+            permissionRepository.save(readPermission);
+
+            Permission writePermission = new Permission();
+            writePermission.setName("WRITE");
+            writePermission.setDescription("Permiso de escritura");
+            permissionRepository.save(writePermission);
+
+            // Crear rol de propietario con todos los permisos
             Role ownerRole = new Role();
             ownerRole.setName("OWNER");
-            ownerRole.setDescription("Rol con acceso total al sistema");
-            ownerRole.setPermissions(new HashSet<>(Arrays.asList(
-                readUsers, createUsers, updateUsers, deleteUsers, manageRoles
-            )));
+            ownerRole.setDescription("Rol de propietario");
+            ownerRole.setPermissions(new HashSet<>(Set.of(readPermission, writePermission)));
             roleRepository.save(ownerRole);
 
-            // Crear usuario OWNER
+            // Crear usuario propietario
             User ownerUser = new User();
-            ownerUser.setUsername(username);
-            ownerUser.setEmail(email);
-            ownerUser.setPassword(passwordEncoder.encode(password));
+            ownerUser.setUsername("owner");
+            ownerUser.setEmail("owner@example.com");
+            ownerUser.setPassword(passwordEncoder.encode("password"));
             ownerUser.setEnabled(true);
             ownerUser.setPasswordChangeRequired(true);
             ownerUser.setRoles(Set.of(ownerRole));
             userRepository.save(ownerUser);
-        }
-    }
-
-    private Permission createPermission(String name, String description) {
-        Permission permission = new Permission();
-        permission.setName(name);
-        permission.setDescription(description);
-        return permissionRepository.save(permission);
+        };
     }
 } 

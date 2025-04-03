@@ -1,7 +1,7 @@
 package com.tuempresa.authservice.dto;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 
 @Data
 @Builder

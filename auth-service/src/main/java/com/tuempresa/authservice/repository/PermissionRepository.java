@@ -8,4 +8,4 @@ import java.util.Optional;
 public interface PermissionRepository extends MongoRepository<Permission, String> {
     Optional<Permission> findByName(String name);
     boolean existsByName(String name);
-} 
+}

@@ -15,7 +15,7 @@ public class RoleService {
 
     public Role createRole(Role role) {
         if (roleRepository.existsByName(role.getName())) {
-            throw new IllegalArgumentException("Role name already exists");
+            throw new IllegalArgumentException("Role already exists");
         }
         return roleRepository.save(role);
     }
