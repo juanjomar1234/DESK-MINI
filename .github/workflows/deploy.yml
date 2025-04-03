@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -16,15 +18,20 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           
-      - name: Build Auth Service
+      - name: List files for debugging
         run: |
-          cd auth-service
-          mvn -B package --file pom.xml -DskipTests
+          pwd
+          ls -la
+          ls -la auth-service/
+          ls -la frontend-service/
+          
+      - name: Build Auth Service
+        working-directory: ./auth-service
+        run: mvn -B package -DskipTests
           
       - name: Build Frontend Service
-        run: |
-          cd frontend-service
-          mvn -B package --file pom.xml -DskipTests
+        working-directory: ./frontend-service
+        run: mvn -B package -DskipTests
         
       - name: Create deployment directory
         uses: appleboy/ssh-action@master
