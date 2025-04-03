@@ -1,5 +1,6 @@
 package com.tuempresa.authservice.security;
 
+import com.tuempresa.authservice.config.BaseTestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

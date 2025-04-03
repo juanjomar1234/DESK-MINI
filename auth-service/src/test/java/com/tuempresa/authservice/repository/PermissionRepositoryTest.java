@@ -1,6 +1,7 @@
 package com.tuempresa.authservice.repository;
 
 import com.tuempresa.authservice.model.Permission;
+import com.tuempresa.authservice.config.BaseTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
